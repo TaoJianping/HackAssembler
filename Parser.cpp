@@ -3,6 +3,7 @@
 //
 
 #include "Parser.h"
+#include "Utils.h"
 #include <fstream>
 
 bool has_suffix(const std::string &str, const std::string &suffix) {
@@ -86,7 +87,7 @@ std::string Parser::comp() {
             if (pos == _currentCommand.size()) {
                 return "null";
             }
-            return _currentCommand.substr(pos, _currentCommand.size());
+            return _currentCommand.substr(pos+1, _currentCommand.size());
         }
     }
     throw std::runtime_error("Parser::comp() invalid command");
@@ -131,4 +132,17 @@ bool Parser::IsComment(std::string str) {
         }
     }
     return false;
+}
+
+void Parser::reset() {
+    _fileStream.clear();                 // clear fail and eof bits
+    _fileStream.seekg(0, std::ios::beg); // back to the start!
+}
+
+bool Parser::ContainDest() {
+    return Utils::StringContains(_currentCommand, "=");
+}
+
+std::string Parser::ConcatenateCInstruction(const std::string& dest, const std::string& comp, const std::string& jump) {
+    return "111" + comp + dest + jump;
 }

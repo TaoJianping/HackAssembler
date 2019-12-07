@@ -7,10 +7,16 @@
 
 
 #include <string>
+#include <fstream>
 
 class Assembler {
+    std::ofstream _outPutFile;
 public:
     void translate(const std::string& path);
+    void WriteData(const std::string& data);
+    void InitWriteFile(const std::string& path);
+    void CloseFile();
+
 };
 
 

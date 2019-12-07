@@ -27,6 +27,9 @@ public:
     bool IsInvalidCommand();
     static bool IsComment(std::string);
     static std::string remove_ws(const std::string& str);
+    void reset();
+    bool ContainDest();
+    std::string ConcatenateCInstruction(const std::string& dest, const std::string& comp, const std::string& jump);
 };
 
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Assembler.h"
+#include "UnitTest.h"
 
 int main() {
     auto assembler = new Assembler();
