@@ -18,7 +18,8 @@ Parser::Parser(const std::string &path) {
 void Parser::advance() {
     std::string tmp;
     std::getline(_fileStream, tmp);
-    _currentCommand = remove_ws(tmp);
+    tmp = remove_ws(tmp);
+    _currentCommand = removeComment(tmp);
 }
 
 bool Parser::hasMoreCommands() {
@@ -39,7 +40,7 @@ std::string Parser::symbol() {
     if (commandType() == CommandType::A_COMMAND) {
         return _currentCommand.substr(1);
     } else if (commandType() == CommandType::L_COMMAND) {
-        return _currentCommand.substr(1, _currentCommand.size() - 1);
+        return _currentCommand.substr(1, _currentCommand.size() - 2);
     } else {
         throw std::runtime_error("Parser::symbol() function not detect right CommandType");
     }
@@ -95,7 +96,7 @@ std::string Parser::comp() {
 
 std::string Parser::jump() {
     if (commandType() == CommandType::C_COMMAND) {
-        int pos = 0;
+        int pos = 1;
         for (char &c : _currentCommand) {
             if (c == ';') {
                 break;
@@ -146,3 +147,23 @@ bool Parser::ContainDest() {
 std::string Parser::ConcatenateCInstruction(const std::string& dest, const std::string& comp, const std::string& jump) {
     return "111" + comp + dest + jump;
 }
+
+std::string Parser::removeComment(const std::string& str) {
+    int pos = str.find("//");
+    if (pos!=std::string::npos) {
+        return str.substr(0, pos);
+    } else {
+        return str;
+    }
+}
+
+bool Parser::isVariable() {
+    auto variable = symbol();
+    return isupper(variable[0]) == 0 && !(Utils::StringContains(variable, ".")) && !(Utils::IsNumber(variable));
+};
+
+bool Parser::isLabel() {
+    auto variable = symbol();
+    return isupper(variable[0]) != 0 || Utils::StringContains(variable, ".");
+};
+

@@ -12,6 +12,7 @@ class Utils {
 public:
     static std::string ConvertToBitFormat(int value);
     static bool StringContains(const std::string& source, const std::string& c);
+    static bool IsNumber(const std::string& str);
 };
 
 

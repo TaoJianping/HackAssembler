@@ -17,6 +17,7 @@ public:
     void InitWriteFile(const std::string& path);
     void CloseFile();
 
+
 };
 
 

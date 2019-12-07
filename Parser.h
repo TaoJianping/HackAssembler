@@ -30,6 +30,9 @@ public:
     void reset();
     bool ContainDest();
     std::string ConcatenateCInstruction(const std::string& dest, const std::string& comp, const std::string& jump);
+    std::string removeComment(const std::string& str);
+    bool isVariable();
+    bool isLabel();
 };
 
 
